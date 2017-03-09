@@ -9,7 +9,8 @@ const store = configureStore()
 
 async function clientRoute(ctx,next){
     let _renderProps
-    match({routes,location:ctx.url},(error,redirectLocation,renderProps)=>{
+    //react-router服务器端路由匹配,由于match属于异步操作，因此使用await关键字，在match返回前不会往下执行。
+    await match({routes,location:ctx.url},(error,redirectLocation,renderProps)=>{
         _renderProps=renderProps
     })
     if(_renderProps){

@@ -12,7 +12,7 @@ const routes = {
             getComponent(nextState,callback){
                 require.ensure([],require=>{
                     callback(null,require('./audioPlay/containers/App'))
-                },'home')
+                },'audioPlay')
             }
         }
     }]

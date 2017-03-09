@@ -41,20 +41,21 @@ clientConfig = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015', 'react', 'stage-0', 'react-hmre'],
+                    presets: ['es2015', 'react', 'stage-0'],
                     plugins: ['transform-runtime', 'add-module-exports'],
                     cacheDirectory: true
                 }
             }, {
                 test: /\.scss$/,
-                use: [
+                use: ExtractTextPlugin.extract([
                     'style-loader',
                     'css-loader?modules&camelCase&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:8]',
+                    'postcss-loader',
                     'sass-loader'
-                ]
+                ])
             }, {
                 test: /\.(jpg|png|gif|webp)$/,
-                loader: 'url-loader?limit=8000',
+                loader: 'url-loader',
                 options: {
                     limit: 8000
                 }
@@ -63,7 +64,7 @@ clientConfig = {
                 loader: 'json-loader'
             }, {
                 test: /\.html$/,
-                loader: 'html-loader?minimize=false',
+                loader: 'html-loader',
                 options: {
                     minimize: false
                 }
@@ -71,8 +72,8 @@ clientConfig = {
             }
         ],
     },
-    postcss: [autoprefixer({ browsers: ['> 5%'] })],
-    resolve: { extensions: ['', '.js', '.json', '.scss'] },
+    // postcss: [autoprefixer({ browsers: ['> 5%'] })],
+    resolve: { extensions: ['.js', '.json', '.scss'] },
     plugins: [
         // new webpack.optimize.OccurrenceOrderPlugin(),
         // new webpack.optimize.DedupePlugin(),
@@ -90,7 +91,7 @@ clientConfig = {
             template: './views/tpl/index.tpl.html',
             chunksSortMode: 'none'
         }),
-        new ExtractTextPlugin('[name].[contenthash:8].css', { allChunks: true }) //提取css文件，以contenthash方式命名
+        new ExtractTextPlugin({ filename: '[name].[contenthash:8].css', allChunks: true }) //提取css文件，以contenthash方式命名
     ]
 }
 
@@ -114,41 +115,36 @@ serverConfig = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015', 'react', 'stage-0', 'react-hmre'],
-                    plugins: ['transform-runtime', 'add-module-exports'],
+                    presets: ['es2015', 'react', 'stage-0'],
+                    plugins: ['add-module-exports'],
                     cacheDirectory: true
                 }
             }, {
                 test: /\.scss$/,
                 use: [
-                    'style-loader',
+                    // 'style-loader',
                     'css-loader?modules&camelCase&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:8]',
                     'sass-loader'
                 ]
             }, {
                 test: /\.(jpg|png|gif|webp)$/,
-                loader: 'url-loader?limit=8000',
+                loader: 'url-loader',
                 options: {
                     limit: 8000
                 }
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
-            }, {
-                test: /\.html$/,
-                loader: 'html-loader?minimize=false',
-                options: {
-                    minimize: false
-                }
-
             }
         ]
     },
-    externals: getExternals(),//外部依赖，不打包
-    resolve: { extensions: ['', '.js', '.json', '.scss'] },
+     externals: getExternals(),//外部依赖，不打包
+    resolve: { extensions: ['.js', '.json', '.scss'] },
+
+
     plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.DedupePlugin(),
+        // new webpack.optimize.OccurrenceOrderPlugin(),
+        // new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: { warnings: false },
             comments: false
