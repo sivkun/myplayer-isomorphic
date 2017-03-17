@@ -1,0 +1,154 @@
+//播放列表
+.playList{
+    display: inline-block;
+    position: relative;
+    .hidden{ //隐藏
+        opacity: 0;
+        visibility: hidden;
+        display: inline-block;
+    }
+    &Show{ //播放列表展示
+        position: absolute;
+        bottom: 5rem;
+        right: -2.6rem;
+        transition: opacity .2s ease,display .2s ease;
+         .list{
+            width:50rem;
+            height: 50rem;
+            border: 1px solid #DDDDE1;
+            background: #ffffff;
+        &Top{
+            height: 4.5rem;
+            line-height: 4.5rem;
+            border-bottom: 1px solid #DDDDE1;
+            .musicList{
+                display: inline-block;
+                width:calc(55% - 4rem);
+                font-size: 1.6rem;
+                padding-left: 4rem;
+
+            }
+            .collection{
+                display: inline-block;
+                font-size: 1.3rem;
+                margin-right: 2rem;
+                i{
+                margin-right: 2px;
+                }
+            }
+            .clearAll{
+                display: inline-block;
+                font-size: 1.3rem;
+                margin-left: 2rem;
+                margin-right: 3.5rem;
+                i{
+                margin-right: 2px;
+                }
+            }
+            .ltclose{
+            //  display: inline-block;
+            }
+        }
+        &Container{
+            width:50.3rem;
+            height: 10rem;
+        div:nth-child(2n+1){
+        background-color: #F9F9F9;
+        }
+        .zoomf{
+            font-size: .99rem;
+            text-shadow: 1px 1px 1px #DDDDE1;
+            padding:0 3px !important;
+            }
+        .playListItem{
+            height: 4.5rem;
+            line-height: 4.5rem;
+            div,span{
+            display: inline-block;
+            overflow: hidden;
+            }
+            .status{
+            opacity: 0;
+            visibility: hidden;
+            width: 4rem;
+            text-align: center;
+            }
+            .songCon{
+            width:calc(55% - 4rem);
+            font-size: 1.4em;
+
+            }
+            .artist{
+            width:calc( ( 45% + 4rem ) * .5 );
+            color:#939393;
+            font-size: 1.2em;
+
+            }
+            .time{
+            color:#939393;
+            font-size: 1.2em;
+            }
+            .delete{
+            padding-left: 2.5rem;
+            display: none;
+            }
+            &:hover{
+            background-color: #F2F2F3;
+            }
+            &:focus{
+            background-color:  #E8E8EA;
+            outline: none;
+            .delete{
+            display: inline-block;
+            }
+            &:hover{
+            background-color: #DEDEE0;
+            }
+            }
+        }
+        }
+
+
+    }
+    }
+    &-icon{
+    // background-color: #55ffcc;
+    text-align: center;
+    display: inline-block;
+    color:#939393;
+    width:5.6rem;
+    height: 6rem;
+    line-height: 6rem;
+    vertical-align:top;
+    .number{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 2px;
+    background-color: #BABBC0;
+    color:#fff;
+    font-size: .8rem;
+    height: 1.6rem;
+    width:2rem;
+    line-height: 1.6rem;
+    border-radius: .5rem;
+    }
+    &:focus{
+    outline: none;
+    }
+}
+}
+
+//滚动条样式
+.thumb-vertical{
+    position: relative;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(173, 175, 178, .8);
+    // height: 20px;
+    transform: translateY(63.565px);
+    &:hover{
+      background-color: rgba(173, 175, 178, 1);
+    }
+}

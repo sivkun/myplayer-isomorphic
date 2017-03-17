@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import userInfo from './userInfo'
-
-const rootReducer = combineReducers({userInfo})
+import musicList from './musicList'
+import {control} from './control'
+const rootReducer = combineReducers({control,musicList})
 
 export default rootReducer;

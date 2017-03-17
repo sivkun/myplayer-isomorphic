@@ -8,13 +8,13 @@ const routes = {
     childRoutes:[{
         path:'/',
         component:require('./common/containers/Root'),
-        indexRoute:{
-            getComponent(nextState,callback){
-                require.ensure([],require=>{
-                    callback(null,require('./audioPlay/containers/App'))
-                },'audioPlay')
-            }
-        }
+        // indexRoute:{
+        //     getComponent(nextState,callback){
+        //         require.ensure([],require=>{
+        //             callback(null,require('./audioPlay/containers/App'))
+        //         },'audioPlay')
+        //     }
+        // }
     }]
 }
 

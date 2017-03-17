@@ -37,18 +37,38 @@ module.exports = {
                     cacheDirectory: true
                 }
             }, {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            }, {
                 test: /\.scss$/,
                 use: [
                     'style-loader',
-                    'css-loader?modules&camelCase&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:8]',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            camelCase: true,
+                            importLoaders: 1,
+                            localIdentName: '[name]__[local]__[hash:base64:8]'
+                        }
+                    },
                     'sass-loader'
                 ]
             }, {
-                test: /\.(jpg|png|gif|webp)$/,
+                test: /\.(png|jpg|gif|webp|woff|woff2|eot|svg|ttf)$/,
                 loader: 'url-loader',
-                options: {
-                    limit: 8000
+                options:{
+                    limit:8192
                 }
+
+            },  {
+
+                test: /\.(mp3|mp4|ogg|svg)$/,
+                loader: 'file-loader'
+
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
@@ -62,7 +82,7 @@ module.exports = {
             }
         ],
     },
-    resolve: { extensions: ['.js', '.json', '.scss'] },
+    resolve: { extensions: ['.js', '.json',  '.css','.scss'] },
     plugins: [
 
         new webpack.optimize.CommonsChunkPlugin({

@@ -1,0 +1,22 @@
+  .controller{
+    z-index: 101;
+    position: relative;
+    display: inline-block;
+    background-color: #fff;
+    vertical-align:top;
+    padding-left: 3rem;
+    width:16rem;
+    height: 6rem;
+    span{
+      display: inline-block;
+      font-size: 3rem;
+      color:#DF3B3B;
+      width: 5rem;
+      line-height: 6rem;
+      vertical-align: middle;
+    }
+    .playIcon{
+      font-size: 3.5rem;
+      width:5.5rem;
+    }
+  }

@@ -1,0 +1,19 @@
+/*app*/
+.app{
+  width: 80%;
+  // height: 700px;
+  background-color: #FFFFFF;
+  margin: 0 auto 20px;
+  border: 0.01px solid #1883D7;
+  min-width: 50rem;
+  position:absolute;
+  overflow: hidden;
+  //  left: 50%;
+  //  margin-left: -40% ;  /*此处的负值是宽度的一半*/
+  user-select:none;
+}
+@media only screen and (max-width:50rem){
+  .app{
+    width:100%;
+  }
+}

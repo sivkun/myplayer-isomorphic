@@ -1,0 +1,30 @@
+/*header*/
+.header{
+    width:100%;
+    background-color: #BC2F2E;
+    overflow: hidden;
+  .left{
+    float: left;
+    color:#fff;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin:1rem auto;
+    margin-left:2rem;
+  }
+  .right{
+    float: right;
+    color: #fff;
+    ul {
+      li{
+        display: inline-block;
+        line-height: 1.8rem;
+        padding: 1rem 2rem;
+        font-size: 1.5rem;
+        font-weight: 100;
+        &:hover{
+          background-color: #E81023;
+        }
+      }
+   }
+  }
+}

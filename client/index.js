@@ -6,9 +6,9 @@ import routes from './routes'
 import configureStore from './common/store/configureStore'
 
 const store = configureStore(window.REDUX_STATE)
-
+ console.log(window.REDUX_STATE,store.getState());
 match({history: browserHistory, routes}, (error, redirectLocation, renderProps) => {
-    console.log({...renderProps});
+    // console.log({...renderProps});
     render(
         <Provider store={store}>
             <Router {...renderProps}/>
