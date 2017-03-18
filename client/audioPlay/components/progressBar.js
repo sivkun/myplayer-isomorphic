@@ -27,14 +27,50 @@ export default class ProgressBar extends React.Component {
         let barbgD = ReactDOM.findDOMNode(this.refs.barbg);
         event.preventDefault();
         event.stopPropagation();
+        // console.log(event.nativeEvent.offsetX,event.target.nodeName)
+        // if(event.target.nodeName!=='SPAN')
         this.props.curClickHandler(this.props.mInfo.totalTime * event.nativeEvent.offsetX / barbgD.offsetWidth);
-
+    }
+    curDotDragHandler(e) {
+        //[-5,this.barbgDWidth-15]
+        const props = this.props;
+        const barbgDWidth = this.barbgDWidth - 10;
+        const ele = e.target;
+        const startX = e.clientX;
+        const deltaX = startX - ele.offsetLeft;
+        document.addEventListener('mousemove', moveHandler, true);
+        document.addEventListener('mouseup', upHandler, true);
+        e.stopPropagation();
+        e.preventDefault();
+        function moveHandler(e) {
+            let left = e.clientX - deltaX;
+            if (left < -5) {
+                left = -5
+            }
+            if (left > barbgDWidth) {
+                left = barbgDWidth
+            }
+            props.curDotDragHandler((left + 5) / barbgDWidth);
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        function upHandler(e) {
+            document.removeEventListener('mouseup', upHandler, true);
+            document.removeEventListener('mousemove', moveHandler, true);
+            props.curDotDragHandler('upHandler');
+            e.stopPropagation();
+            e.preventDefault();
+        }
     }
 
     render() {
         let mInfo = this.props.mInfo;
         const timeFormat = utils.timeFormat;
-        const { curTime, totalTime } = mInfo;
+        const { totalTime } = mInfo;
+        let curTime = this.props.curTime;
+        if (this.props.dragTime !== -1) {
+            curTime = this.props.dragTime;
+        }
         let curDotLeft, curWidth;
         if (this.barbgDWidth != null) {
             curWidth = curTime / totalTime * (this.barbgDWidth - 10);
@@ -55,7 +91,9 @@ export default class ProgressBar extends React.Component {
                     <div className={Style.barbg} ref='barbg' >
                         <div className={Style.rdy} ></div>
                         <div className={Style.cur} style={{ width: curWidth }} ref='cur'>
-                            <span className='' style={{ left: curDotLeft }} ref='curDot' ></span>
+                            <span className='' style={{ left: curDotLeft }} ref='curDot'
+                            onMouseDown={(e) =>{this.curDotDragHandler(e)}}
+                            onClick={(e)=>{e.stopPropagation()}} ></span>
                         </div>
                     </div>
                 </div>
