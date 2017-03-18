@@ -94,6 +94,7 @@ class AudioWidget extends React.Component {
         return (
             <div className={Style.audioWidget}>
                 <AudioController
+                    status={this.props.musicList.curMusic.status}
                     switchPlay={() => this.switchPlay()}
                     audioPlayPrevOrNext={(f) => this.audioPlayPrevOrNext(f)}
                 />

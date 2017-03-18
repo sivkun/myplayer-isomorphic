@@ -6,11 +6,11 @@ export default class AduioController extends React.Component {
         super(props);
     }
     render() {
-
+        let playClass='iconfont '+(this.props.status=='pause'?'icon-bofang':'icon-pause1')+' '+ Style.playIycon;
         return (
             <div ref='aduioControll' className={Style.controller}>
                 <span id='pprev' className='iconfont icon-pprev' onClick={()=>this.props.audioPlayPrevOrNext(-1)}></span>
-                <span id='play' className={"iconfont icon-bofang " + Style.playIycon} onClick={()=>{this.props.switchPlay()}}></span>
+                <span id='play' className={playClass} onClick={()=>{this.props.switchPlay()}}></span>
                 <span id='pnext' className='iconfont icon-pnext' onClick={()=>this.props.audioPlayPrevOrNext(1)}></span>
             </div>
         );
