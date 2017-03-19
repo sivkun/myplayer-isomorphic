@@ -70,8 +70,7 @@ class AudioWidget extends React.Component {
             curTime:audioD.currentTime
         });
         if (audioD.paused) {
-            audioD.play();
-            this.setTime();
+           this.switchPlay();
         }
     }
     curDotDragHandler(ratio){
@@ -83,6 +82,9 @@ class AudioWidget extends React.Component {
                     curTime:dragTime,
                     dragTime:-1
                 })
+            }
+            if(this.audioD.paused){
+                this.switchPlay();
             }
         }else{
             this.setState({

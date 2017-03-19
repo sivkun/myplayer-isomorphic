@@ -1,7 +1,6 @@
 const path = require('path'),
     fs = require('fs'),
     webpack = require('webpack'),
-    autoprefixer = require('autoprefixer'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin')
 let clientConfig, serverConfig
@@ -46,19 +45,35 @@ clientConfig = {
                     cacheDirectory: true
                 }
             }, {
-                test: /\.scss$/,
-                use: ExtractTextPlugin.extract([
-                    'style-loader',
-                    'css-loader?modules&camelCase&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:8]',
-                    'postcss-loader',
-                    'sass-loader'
-                ])
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader?minimize',
+                        'postcss-loader',
+                    ]
+                })
             }, {
-                test: /\.(jpg|png|gif|webp)$/,
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader?minimize&modules&camelCase&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:8]',
+                        'postcss-loader',//对应配置文件项目根目录下postcss.config.js
+                        'sass-loader'
+                    ]
+                })
+            }, {
+                test: /\.(png|jpg|gif|webp|woff|woff2|eot|svg|ttf)$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 8000
+                    limit: 8192
                 }
+
+            }, {
+                test: /\.(mp3|mp4|ogg|svg)$/,
+                loader: 'file-loader'
+
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
@@ -72,11 +87,9 @@ clientConfig = {
             }
         ],
     },
-    // postcss: [autoprefixer({ browsers: ['> 5%'] })],
+
     resolve: { extensions: ['.js', '.json', '.scss'] },
     plugins: [
-        // new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             names: ['vendor', 'manifest'],
             filename: '[name].[chunkhash:8].js'
@@ -89,9 +102,9 @@ clientConfig = {
         new HtmlWebpackPlugin({
             filename: '../../views/prod/index.html',
             template: './views/tpl/index.tpl.html',
-            chunksSortMode: 'none'
+            //  chunksSortMode: 'none'
         }),
-        new ExtractTextPlugin({ filename: '[name].[contenthash:8].css', allChunks: true }) //提取css文件，以contenthash方式命名
+        new ExtractTextPlugin({ filename: '[name].[contenthash:8].css', allChunks: true })
     ]
 }
 
@@ -119,32 +132,35 @@ serverConfig = {
                     plugins: ['add-module-exports'],
                     cacheDirectory: true
                 }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'css-loader',
+                ]
             }, {
                 test: /\.scss$/,
                 use: [
-                    // 'style-loader',
                     'css-loader?modules&camelCase&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:8]',
                     'sass-loader'
                 ]
-            }, {
-                test: /\.(jpg|png|gif|webp)$/,
+            },
+            {
+                test: /\.(png|jpg|gif|webp|woff|woff2|eot|svg|ttf)$/,
                 loader: 'url-loader',
-                options: {
-                    limit: 8000
-                }
-            }, {
+            },
+            {
                 test: /\.json$/,
                 loader: 'json-loader'
             }
         ]
     },
-     externals: getExternals(),//外部依赖，不打包
+    externals: getExternals(),
     resolve: { extensions: ['.js', '.json', '.scss'] },
 
 
     plugins: [
-        // new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.optimize.DedupePlugin(),
+
         new webpack.optimize.UglifyJsPlugin({
             compress: { warnings: false },
             comments: false
