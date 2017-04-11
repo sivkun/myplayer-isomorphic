@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 // import {connect} from 'react-redux'
 import ProgressBarCtnr from './ProgressBarCtnr'
-import Volume from '../components/Volume'
+import VolumeCtnr from './VolumeCtnr'
 import Style from '../scss/app'
-import { PlayList } from '../components/PlayList'
+import PlayListCtnr from './PlayListCtnr'
 import AudioControllerCtnr from './AduioControllerCtnr'
 import AudioWidgetCtnr from './AudioWidgetCtnr'
 const AudioImg = () => {
@@ -31,8 +31,8 @@ class AudioPlay extends React.Component {
                 <div className={Style.audioPlayRight} >
                     <span className={"iconfont icon-xihuan1  " +Style.like}></span>
                     <span className={"iconfont icon-bofangliebiao1 "+Style.order}></span>
-                    <Volume />
-                    <PlayList />
+                    <VolumeCtnr />
+                    <PlayListCtnr />
                 </div>
             </div>
         );

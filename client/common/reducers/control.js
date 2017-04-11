@@ -21,6 +21,12 @@ export function control(state={},action){
             ...state,
             control:false
         }
+        case types.VOLUME_SET:
+            return{
+                ...state,
+                volume:action.value
+            }
+
         default:
         return state;
     }

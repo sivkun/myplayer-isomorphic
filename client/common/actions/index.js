@@ -64,9 +64,13 @@ const undoControl = (time)=>{
         value:time
     }
 }
-// function setVolume(){
-
-// }
+//设置音量
+function setVolume(value){
+    return{
+        type:types.VOLUME_SET,
+        value:value
+    }
+}
 // function setMusicIndex(){
 
 // }
@@ -76,7 +80,8 @@ export default{
     setMusicCurTime,
     setCurMusicIndex,
     setDragTime,
-    undoControl
+    undoControl,
+    setVolume
 }
 
 

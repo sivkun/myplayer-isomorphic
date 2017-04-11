@@ -8,7 +8,7 @@ class AudioWidget extends React.Component {
         super(props)
         this.state = {
             curTime: 0,
-            dragTime:-1
+            dragTime: -1
         }
     }
     componentDidMount() {
@@ -25,20 +25,18 @@ class AudioWidget extends React.Component {
             clearInterval(this.intervalId);
             this.audioD.pause();
             switchStatus('pause');
-
         }
     }
     setTime() {
         const { setMusicCurTime, switchStatus } = this.props.actions
+
         this.intervalId = setInterval(() => {
+
             let audioD = this.audioD;
-            // setMusicCurTime(audioD.currentTime);
             this.setState({
                 curTime: audioD.currentTime
             });
-            // console.log(this.state)
             if (this.audioD.ended) {
-            //  setMusicCurTime(0);
                 this.setState({
                     curTime: 0
                 });
@@ -56,10 +54,10 @@ class AudioWidget extends React.Component {
         const length = playList.length;
         const index = (length + mIndex + f) % length;
         actions.setCurMusicIndex(index);
-        this.audioD.pause();
+        // this.audioD.pause();
         clearInterval(this.intervalId);
-        this.audioD = new Audio(playList[index].url);
-        this.switchPlay();
+        // this.audioD = new Audio(playList[index].url); //该操作改在componentWillReceiveProps中操作。通过state中的musicList的mIndex进行控制。
+        // this.switchPlay();
     }
     curClickHandler(time) {
         const { setMusicCurTime } = this.props.actions;
@@ -67,32 +65,47 @@ class AudioWidget extends React.Component {
         audioD.currentTime = time;
         // setMusicCurTime(audioD.currentTime);
         this.setState({
-            curTime:audioD.currentTime
+            curTime: audioD.currentTime
         });
         if (audioD.paused) {
-           this.switchPlay();
+            this.switchPlay();
         }
     }
-    curDotDragHandler(ratio){
-        if(ratio==='upHandler'){
-            let dragTime=this.state.dragTime;
-            if(dragTime!==-1){
-                this.audioD.currentTime=dragTime;
+    curDotDragHandler(ratio) {
+        if (ratio === 'upHandler') {
+            let dragTime = this.state.dragTime;
+            if (dragTime !== -1) {
+                this.audioD.currentTime = dragTime;
                 this.setState({
-                    curTime:dragTime,
-                    dragTime:-1
+                    curTime: dragTime,
+                    dragTime: -1
                 })
             }
-            if(this.audioD.paused){
+            if (this.audioD.paused) {
                 this.switchPlay();
             }
-        }else{
+        } else {
             this.setState({
-                dragTime:this.audioD.duration*ratio
+                dragTime: this.audioD.duration * ratio
             });
         }
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.musicList.mIndex !== this.props.musicList.mIndex) {
+            const { musicList } = nextProps;
+            clearInterval(this.intervalId);
+            this.audioD.pause();
+            this.audioD = new Audio(musicList.curMusic.url);
+            this.switchPlay();
+        }
+    }
     render() {
+        if (this.audioD) {
+            this.audioD.volume = this.props.control.volume
+        }
+        if (this.props.musicList.mIndex) {
+
+        }
         return (
             <div className={Style.audioWidget}>
                 <AudioController
@@ -105,7 +118,7 @@ class AudioWidget extends React.Component {
                     curTime={this.state.curTime}
                     dragTime={this.state.dragTime}
                     curClickHandler={(t) => this.curClickHandler(t)}
-                    curDotDragHandler={(r)=>this.curDotDragHandler(r)}
+                    curDotDragHandler={(r) => this.curDotDragHandler(r)}
                 />
             </div>
         )
